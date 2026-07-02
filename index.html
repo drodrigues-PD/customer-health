@@ -136,8 +136,8 @@ h1{font-size:20px;font-weight:600;margin-bottom:3px}
 
 /* Gong Sentiment Modal */
 .gong-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.gong-modal{background:#fff;border:1px solid #e2dfd6;border-radius:12px;width:100%;max-width:860px;overflow:visible;box-shadow:0 8px 40px rgba(0,0,0,.18);margin:auto}
-.gm-header{padding:14px 20px;border-bottom:1px solid #f0eee8;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.gong-modal{background:#fff;border:1px solid #e2dfd6;border-radius:12px;width:100%;max-width:860px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.18);margin:auto;display:flex;flex-direction:column;max-height:88vh}
+.gm-header{padding:14px 20px;border-bottom:1px solid #f0eee8;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-shrink:0}
 .gm-title{font-size:13px;font-weight:700;color:#1a1a1a}
 .gm-sub{font-size:11px;color:#999;margin-top:2px;line-height:1.5}
 .gm-close{background:none;border:none;font-size:20px;color:#aaa;cursor:pointer;padding:0;line-height:1;flex-shrink:0}
@@ -152,7 +152,7 @@ h1{font-size:20px;font-weight:600;margin-bottom:3px}
 .gm-ts{background:#f0eee8;color:#555}
 .gm-tid{background:#f0eee8;color:#aaa}
 .gm-trend-lbl{font-size:10px;color:#bbb}
-.gm-cats-col{padding:12px 16px;overflow-y:auto;max-height:360px}
+.gm-cats-col{padding:12px 16px}
 .gm-cat{padding:8px 0;border-bottom:1px solid #f7f6f2}
 .gm-cat:last-child{border-bottom:none}
 .gm-cat-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
@@ -161,7 +161,7 @@ h1{font-size:20px;font-weight:600;margin-bottom:3px}
 .gm-cat-bar{height:3px;background:#f0eee8;border-radius:2px;margin-bottom:5px;overflow:hidden}
 .gm-cat-fill{height:3px;border-radius:2px}
 .gm-cat-desc{font-size:11px;color:#666;line-height:1.5}
-.gm-calls-section{border-top:1px solid #f0eee8;overflow-y:auto;max-height:320px}
+.gm-calls-section{border-top:1px solid #f0eee8}
 .gm-calls-hdr{padding:8px 20px;border-bottom:1px solid #f0eee8;display:flex;align-items:center;justify-content:space-between}
 .gm-calls-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#aaa}
 .gm-calls-win{font-size:10px;color:#bbb}
@@ -169,14 +169,14 @@ h1{font-size:20px;font-weight:600;margin-bottom:3px}
 .gm-call-row:last-child{border-bottom:none}
 .gm-call-date{font-size:10px;color:#bbb;font-family:monospace;white-space:nowrap;min-width:52px;padding-top:1px}
 .gm-call-body{flex:1;min-width:0}
-.gm-call-title{font-size:11px;font-weight:600;color:#1a1a1a;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gm-call-title{font-size:11px;font-weight:600;color:#1a1a1a;margin-bottom:2px}
 .gm-call-brief{font-size:11px;color:#666;line-height:1.45}
 .gm-call-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
 .gm-tag{font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:4px}
 .gm-tag-pain{background:#FCEBEB;color:#E24B4A}
 .gm-tag-champ{background:#EAF3DE;color:#1D9E75}
 .gm-tag-neutral{background:#f0eee8;color:#666}
-.gm-footnote{font-size:10px;color:#bbb;padding:8px 20px;background:#f7f6f2;border-top:1px solid #f0eee8;line-height:1.6}
+.gm-footnote{font-size:10px;color:#bbb;padding:8px 20px;background:#f7f6f2;border-top:1px solid #f0eee8;line-height:1.6}.gm-scrollable{flex:1;overflow-y:auto;overflow-x:hidden;min-height:0}
 .srow.gong-cl{cursor:pointer;border-radius:4px;transition:background .1s}
 .srow.gong-cl:hover{background:#f7f6f2}
 
@@ -548,9 +548,9 @@ function updateBreadcrumb(crumbs) {
  const bc = document.getElementById('breadcrumb');
  bc.innerHTML = crumbs.map((c, i) => {
  if (i < crumbs.length - 1) {
- return `<a onclick="${c.onclick}">${c.label}</a><span class="sep">›</span>`;
+ return `<a onclick="${c.onclick}">${esc(c.label)}</a><span class="sep">›</span>`;
  } else {
- return `<span class="current">${c.label}</span>`;
+ return `<span class="current">${esc(c.label)}</span>`;
  }
  }).join('');
 }
@@ -638,7 +638,7 @@ function showGroup(group) {
     return `<div class="cust-row" onclick="showDetail(${allSorted.indexOf(a)}, '${group}')">
 <div class="cust-accent" style="background:${color}"></div>
 <div style="flex:1;min-width:0">
-<div class="cust-name">${a.name}</div>
+<div class="cust-name">${esc(a.name)}</div>
 <div class="cust-meta">Renewal: ${a.cohort}</div>
 </div>
 <div class="cust-pills">
@@ -701,8 +701,8 @@ function showDetail(idx, group) {
  detailDiv.innerHTML = `
  <div class="detail-inner" style="border-left:4px solid ${color}">
  <div style="padding:14px 14px 0;border-bottom:1px solid #f0eee8;padding-bottom:12px;margin-bottom:0">
- <div style="font-size:16px;font-weight:700;margin-bottom:2px">${account.name}</div>
- <div style="font-size:12px;color:#aaa">${account.arr_str} ARR &nbsp;·&nbsp; ${group} &nbsp;·&nbsp; ${account.cohort}</div>
+ <div style="font-size:16px;font-weight:700;margin-bottom:2px">${esc(account.name)}</div>
+ <div style="font-size:12px;color:#aaa">${esc(account.arr_str)} ARR &nbsp;·&nbsp; ${esc(group)} &nbsp;·&nbsp; ${esc(account.cohort)}</div>
  </div>
  ${inner}
  </div>`;
@@ -819,16 +819,17 @@ function drawR(cid,scores){
   }
 }
 
+function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
 function openGongModal(name){
   var data=GONG[name],bd=document.getElementById('gong-bd'),mi=document.getElementById('gong-mi');
   var cid='gr'+Date.now();
   if(!data||data.score_call_count===0){
-    mi.innerHTML='<div class="gm-header"><div><div class="gm-title">'+name+' — Conversation Sentiment</div><div class="gm-sub">No Gong call data available in the last 90 days.</div></div><button class="gm-close" onclick="closeGong()">×</button></div><div style="padding:40px 24px;color:#aaa;font-size:12px;text-align:center">No scored call activity to display.</div>';
+    mi.innerHTML='<div class="gm-header"><div><div class="gm-title">'+esc(name)+' — Conversation Sentiment</div><div class="gm-sub">No Gong call data available in the last 90 days.</div></div><button class="gm-close" onclick="closeGong()">×</button></div><div style="padding:40px 24px;color:#aaa;font-size:12px;text-align:center">No scored call activity to display.</div>';
     bd.style.display='flex';return;
   }
   var s=data.scores;
   var dimRows=DIMS.map(function(d){
-    var v=s[d]||0,pct=v/5*100,desc=data.dim_descs[d]||'',col=sc(d,v);
+    var v=s[d]||0,pct=v/5*100,desc=esc(data.dim_descs[d]||''),col=sc(d,v);
     /* Plain-english level label for inverted dims */
     var scoreLabel=v?v+' / 5':'–';
     if(d==='replacement_risk'&&v){
@@ -856,10 +857,10 @@ function openGongModal(name){
   var callRows=(data.recent_calls||[]).map(function(c){
     var tags=(c.tags||[]).map(function(t){return'<span class="gm-tag '+tc(t[0])+'">'+t[1]+'</span>';}).join('');
     var brief=c.brief||'';
-    return'<div class="gm-call-row"><div class="gm-call-date">'+c.dt+'</div><div class="gm-call-body"><div class="gm-call-title">'+c.title+'</div><div class="gm-call-brief">'+brief+'</div>'+(tags?'<div class="gm-call-tags">'+tags+'</div>':'')+'</div></div>';
+    return'<div class="gm-call-row"><div class="gm-call-date">'+esc(c.dt)+'</div><div class="gm-call-body"><div class="gm-call-title">'+esc(c.title)+'</div><div class="gm-call-brief">'+esc(brief)+'</div>'+(tags?'<div class="gm-call-tags">'+tags+'</div>':'')+'</div></div>';
   }).join('');
   var win=data.window_str;
-  mi.innerHTML='<div class="gm-header"><div><div class="gm-title">'+name+' — Conversation Sentiment Breakdown</div><div class="gm-sub">Scores reflect the last 90 days of Gong activity ('+win+'). Notable patterns from the full call history are surfaced where relevant. Trends compare against the prior 12 months (Apr 2025–Mar 2026) to surface directional shifts in each dimension.</div></div><button class="gm-close" onclick="closeGong()">×</button></div><div class="gm-body"><div class="gm-radar-col"><div class="gm-radar-lbl">5-dimension view &middot; '+data.score_call_count+' calls</div><canvas id="'+cid+'" width="248" height="238"></canvas><div class="gm-trend-row">'+tb(data.trend_dir)+'<span class="gm-trend-lbl">vs. prior 12 months</span></div><div style="margin-top:10px;font-size:9.5px;color:#bbb;line-height:1.6">Relationship Tension, Replacement Risk,<br>Product Friction: lower score = healthier.<br>Conversation Balance, Strategic Momentum:<br>higher score = healthier.</div></div><div class="gm-cats-col">'+dimRows+'</div></div>'+(callRows?'<div class="gm-calls-section"><div class="gm-calls-hdr"><div class="gm-calls-title">Recent calls</div><div class="gm-calls-win">'+win+'</div></div>'+callRows+'<div class="gm-footnote">Replacement Risk, Relationship Tension, and Product Friction are scored 1 (lowest, healthiest) to 5 (highest, most concerning). Conversation Balance and Strategic Momentum are scored 1 (weakest) to 5 (strongest). Replacement Risk measures evidence of competitors being evaluated as a PD replacement; migrations from competitors to PD are treated as a positive signal.</div></div>':'');
+  mi.innerHTML='<div class="gm-header"><div><div class="gm-title">'+esc(name)+' — Conversation Sentiment Breakdown</div><div class="gm-sub">Scores reflect the last 90 days of Gong activity ('+win+'). Notable patterns from the full call history are surfaced where relevant. Trends compare against the prior 12 months (Apr 2025–Mar 2026) to surface directional shifts in each dimension.</div></div><button class="gm-close" onclick="closeGong()">×</button></div><div class="gm-scrollable"><div class="gm-body"><div class="gm-radar-col"><div class="gm-radar-lbl">5-dimension view &middot; '+data.score_call_count+' calls</div><canvas id="'+cid+'" width="248" height="238"></canvas><div class="gm-trend-row">'+tb(data.trend_dir)+'<span class="gm-trend-lbl">vs. prior 12 months</span></div><div style="margin-top:10px;font-size:9.5px;color:#bbb;line-height:1.6">Relationship Tension, Replacement Risk,<br>Product Friction: lower score = healthier.<br>Conversation Balance, Strategic Momentum:<br>higher score = healthier.</div></div><div class="gm-cats-col">'+dimRows+'</div></div>'+(callRows?'<div class="gm-calls-section"><div class="gm-calls-hdr"><div class="gm-calls-title">Recent calls</div><div class="gm-calls-win">'+win+'</div></div>'+callRows+'<div class="gm-footnote">Replacement Risk, Relationship Tension, and Product Friction are scored 1 (lowest, healthiest) to 5 (highest, most concerning). Conversation Balance and Strategic Momentum are scored 1 (weakest) to 5 (strongest). Replacement Risk measures evidence of competitors being evaluated as a PD replacement; migrations from competitors to PD are treated as a positive signal.</div></div></div>':'');
   bd.style.display='flex';
   setTimeout(function(){drawR(cid,s);},30);
 }
