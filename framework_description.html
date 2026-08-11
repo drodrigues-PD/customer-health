@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Framework Description - Health, Momentum and Segmentation</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;background:#faf9f7;line-height:1.5;padding:32px 20px 60px}
+.wrap{max-width:900px;margin:0 auto}
+h1.page-title{font-size:20px;font-weight:700;margin-bottom:4px}
+.page-sub{font-size:13px;color:#888;margin-bottom:28px}
+
+.section{background:#fff;border:1px solid #e2dfd6;border-radius:10px;padding:22px 24px;margin-bottom:20px}
+.section h2{font-size:15px;font-weight:700;margin-bottom:4px}
+.section .lead{font-size:12.5px;color:#666;margin-bottom:16px}
+
+/* Health formula */
+.inputs-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:10px}
+.input-chip{background:#f7f6f2;border:1px solid #e2dfd6;border-radius:6px;padding:8px 6px;font-size:10.5px;color:#555;text-align:center;font-weight:600}
+.arrow-down{display:flex;justify-content:center;font-size:18px;color:#bbb;margin:2px 0}
+.formula-box{background:#f1efe8;border:2px solid #6b6355;border-radius:8px;padding:14px 18px;text-align:center;max-width:340px;margin:0 auto 12px}
+.formula-box .f-main{font-size:16px;font-weight:700}
+.formula-box .f-sub{font-size:10.5px;color:#777;margin-top:3px}
+.tier-row{display:flex;justify-content:center;gap:12px}
+.tier{padding:6px 16px;border-radius:16px;font-size:11.5px;font-weight:700}
+.tier.green{background:#EAF3DE;color:#27500A}
+.tier.yellow{background:#FAEEDA;color:#633806}
+.tier.red{background:#FCEBEB;color:#791F1F}
+
+/* Momentum */
+.fam-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}
+.fam-card{background:#f7f6f2;border:1px solid #e2dfd6;border-radius:8px;padding:10px}
+.fam-card .fam-title{font-size:12px;font-weight:700;margin-bottom:6px}
+.fam-card ul{list-style:none;font-size:10.5px;color:#555}
+.fam-card li{margin-bottom:3px;padding-left:10px;position:relative}
+.fam-card li:before{content:"-";position:absolute;left:0;color:#999}
+.modifiers-note{font-size:11px;color:#777;text-align:center;margin:8px 0 14px;font-style:italic}
+.ledger{position:relative;height:30px;border-radius:15px;overflow:hidden;border:1px solid #e2dfd6;display:flex;margin-bottom:8px}
+.ledger .neg{flex:1;background:#FCEBEB}
+.ledger .pos{flex:1;background:#EAF3DE}
+.ledger-labels{display:flex;justify-content:space-between;font-size:10px;color:#999;margin-bottom:10px}
+.outcome-row{display:flex;justify-content:center;gap:14px;margin-bottom:18px}
+.outcome{padding:6px 14px;border-radius:16px;font-size:11px;font-weight:700}
+.outcome.neg{background:#FCEBEB;color:#791F1F}
+.outcome.stable{background:#f0eee8;color:#555}
+.outcome.pos{background:#EAF3DE;color:#27500A}
+
+.override-strip{display:flex;align-items:center;gap:10px;background:#FCEBEB;border:1px dashed #E24B4A;border-radius:8px;padding:12px 14px}
+.override-strip .ov-box{font-size:11px;font-weight:700;color:#791F1F}
+.override-strip .ov-arrow{color:#E24B4A;font-size:16px}
+.override-strip .ov-note{font-size:10px;color:#791F1F;flex:1}
+
+/* Segmentation matrix */
+.matrix-wrap{display:grid;grid-template-columns:130px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:6px;margin-bottom:16px}
+.axis-label{font-size:10.5px;font-weight:700;color:#666;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px}
+.row-label{font-size:11px;font-weight:700;color:#444;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;text-align:right;padding-right:8px}
+.row-label span{font-weight:400;font-size:9.5px;color:#999}
+.cell{border-radius:8px;padding:14px;text-align:center;border:1px solid}
+.cell .g-name{font-size:15px;font-weight:700}
+.cell .g-desc{font-size:10px;margin-top:4px}
+.cell.expand{background:#EAF3DE;border-color:#1D9E75;color:#27500A}
+.cell.protect{background:#FAEEDA;border-color:#BA7517;color:#633806}
+.cell.nurture{background:#ECEAFF;border-color:#7F77DD;color:#3C3489}
+.cell.attention{background:#FCEBEB;border-color:#E24B4A;color:#791F1F}
+
+.overlay-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.overlay-card{border-radius:8px;padding:14px}
+.overlay-card.hard{background:#FCEBEB;border:1px dashed #E24B4A}
+.overlay-card.label-only{background:#f0eee8;border:1px dashed #999}
+.overlay-card .oc-title{font-size:12px;font-weight:700;margin-bottom:6px}
+.overlay-card.hard .oc-title{color:#791F1F}
+.overlay-card.label-only .oc-title{color:#444}
+.overlay-card ol{font-size:10.5px;padding-left:16px;color:#444}
+.overlay-card.hard ol{color:#791F1F}
+.overlay-card li{margin-bottom:5px}
+
+.context-box{border:1px dashed #999;border-radius:8px;padding:16px;text-align:center;background:#f7f6f2}
+.context-box .cb-title{font-size:12.5px;font-weight:700;margin-bottom:5px}
+.context-box .cb-body{font-size:11px;color:#666;margin-bottom:6px}
+.context-box .cb-strong{font-size:11.5px;font-weight:700;color:#5a4a2a}
+
+.legend{font-size:10px;color:#999;text-align:center;margin-top:6px}
+
+table.sig-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:11px}
+table.sig-table th{background:#f3f1ea;color:#555;font-weight:700;padding:5px 8px;border:1px solid #e2dfd6;text-align:left;font-size:10px;text-transform:uppercase}
+table.sig-table td{padding:5px 8px;border:1px solid #ececec;color:#444}
+code.field{font-family:ui-monospace,monospace;font-size:9.5px;background:#f0eee8;padding:1px 4px;border-radius:3px;color:#5a4a2a}
+
+.framing-banner{background:#f1efe8;border-left:4px solid #6b6355;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:24px}
+.framing-banner .fb-title{font-size:12.5px;font-weight:700;color:#3a3327;margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
+.framing-banner p{font-size:12.5px;color:#4a4433;line-height:1.55}
+
+.mini-caption{font-size:10px;color:#999;font-style:italic;text-align:center;margin:6px 0 0}
+.term-note{font-size:10px;color:#888;margin-top:8px;line-height:1.5}
+.term-note b{color:#666;font-weight:700}
+
+.flag-note{background:#FAEEDA;border:1px dashed #BA7517;border-radius:8px;padding:12px 14px;font-size:10.5px;color:#5c3d00;margin-bottom:14px}
+.flag-note b{color:#5c3d00}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#5a77dd;text-decoration:none;margin-bottom:18px}
+.back-link:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="back-link" href="index.html">&#8592; Back to dashboard</a>
+
+<h1 class="page-title">Framework description for the Customer Health and Momentum Matrix</h1>
+
+<div class="section">
+<h2>Executive Summary</h2>
+<p style="font-size:12.5px;color:#444;line-height:1.6;margin-bottom:12px">This is the Customer Health and Momentum Matrix. It's a unified framework that brings together customer health signals that PagerDuty already has, spanning Product Intelligence, Data Science and Salesforce, into one place, giving us a more consistent and actionable view of account risk and opportunity.</p>
+<p style="font-size:12.5px;color:#444;line-height:1.6;margin-bottom:12px">On top of that, we added a Momentum model, calibrated against a retrospective of over 500 churned accounts, that tracks the direction those signals are heading. Together, health and momentum give us one shared lens instead of two disconnected reads on an account.</p>
+<p style="font-size:12.5px;color:#444;line-height:1.6;margin-bottom:12px">The primary purpose is to help sales and customer success teams identify risk earlier, understand what's actually driving account health, and act more strategically to improve renewals and reduce churn. At the same time, this also helps Executives to have better portfolio visibility and Managers to have better monitoring patterns and guide teams.</p>
+<p style="font-size:12.5px;color:#444;line-height:1.6;margin-bottom:12px">The core principle behind this framework is that health on its own isn't enough. A declining trend can hide behind health signals that still look good, and a recovering trend can hide behind health signals that still look weak. That's why we treat momentum as its own dimension, separate from health, so trend and current state are never blended into one number that hides one or the other.</p>
+<p style="font-size:12.5px;color:#444;line-height:1.6">The report covers 205 accounts across the customer base, representing roughly $56 million in ARR.</p>
+<p style="font-size:12.5px;color:#444;line-height:1.6">The dashboard shows, at a glance, which system each signal comes from. Health, Trajectory, and Sentiment come from PagerDuty's Data Science Model. ARR at Risk and CSM Notes come from Salesforce. Competitor Risk is a union of five equal-authority sources spanning the Product Intelligence Model, the Data Science Model, CSM Notes in Salesforce, and Gong call transcripts - any one of them firing carries the same weight and the same consequence, there is no primary or secondary source. Gong call detail is shown separately from the Sentiment score, since the score itself blends Gong calls with email and support tickets, and the Gong view is one input among several, not the full explanation for the number.</p>
+</div>
+
+<h2 style="font-size:17px;font-weight:700;margin:24px 0 16px">How Health, Momentum and Segmentation actually work</h2>
+
+<div class="framing-banner">
+<div class="fb-title">What this dashboard is - and isn't</div>
+<p>This is not a new scoring engine. Health, sentiment, and competitor intelligence already exist as separate outputs elsewhere in PagerDuty's systems, produced by our own data science and product intelligence pipelines. This framework's job is to apply one consistent segmentation logic on top of those existing scores and give every account a single, comparable answer: which group it's in, and what playbook to run. Nothing here recomputes the underlying scores - it organizes them.</p>
+</div>
+
+<!-- SECTION 1: HEALTH -->
+<div class="section">
+<h2>1. Health - where the account stands today</h2>
+<div class="lead">Health = EWS (Early Warning Score) &times; 100. One pre-computed composite, produced by PagerDuty's existing data science model and read directly from the data. Nothing is recomputed in this report.</div>
+
+<div class="mini-caption" style="margin-bottom:8px">A few of the behavioral signals it blends together - illustrative examples, not the full list:</div>
+<div class="inputs-row">
+<div class="input-chip">Seat deployment</div>
+<div class="input-chip">Active responders</div>
+<div class="input-chip">EP* incidents / month</div>
+<div class="input-chip">Mobile notif. reach</div>
+<div class="input-chip">High-urgency, human-resolved</div>
+<div class="input-chip">...and more</div>
+</div>
+<div class="arrow-down">&#8595;</div>
+<div class="formula-box">
+<div class="f-main">EWS Score &times; 100</div>
+<div class="f-sub">= Health (0-100)</div>
+</div>
+<div class="arrow-down">&#8595;</div>
+<div class="tier-row">
+<span class="tier green">Green &ge; 50</span>
+<span class="tier yellow">Yellow 40-49.9</span>
+<span class="tier red">Red &lt; 40</span>
+</div>
+<div class="mini-caption" style="margin-top:6px">Aligned with the Data Science team's official EWS tag thresholds: Green merges the official Yellow and Green bands (50+), Yellow corresponds to the official Orange band (40-50), and Red is unchanged (&lt;40).</div>
+<div class="term-note">*<b>EP</b> = Escalation Policy, the on-call routing rule that determines who gets notified for an incident.</div>
+</div>
+
+<!-- SECTION 2: MOMENTUM -->
+<div class="section">
+<h2>2. Trajectory &amp; Momentum - which direction it's heading</h2>
+<div class="lead"><b>Trajectory</b> starts at 0. Eleven signals across four families, plus two smaller standalone modifiers, add or subtract points - this is the raw, natural, signal-only direction. Sentiment is one family of four, not the whole story. <b>Momentum</b> is a different, related thing: the effective value shown on each account card. Momentum equals Trajectory by default, but it is not only this points system - see the override box below.</div>
+
+<div class="fam-row">
+<div class="fam-card">
+<div class="fam-title">EWS trend</div>
+<ul>
+<li>12-month sustained trend</li>
+<li>Sudden 1-month drop (&ge;10 pts)</li>
+<li>3-month % change</li>
+</ul>
+</div>
+<div class="fam-card">
+<div class="fam-title">Deployment trend</div>
+<ul>
+<li>12-month slope (long-run)</li>
+<li>3-month change (recent shift)</li>
+</ul>
+</div>
+<div class="fam-card">
+<div class="fam-title">Incident trend</div>
+<ul>
+<li>6-month OLS* trend</li>
+<li>EWMA** baseline confirmation</li>
+</ul>
+</div>
+<div class="fam-card" style="position:relative">
+<div class="fam-title">Sentiment trend</div>
+<ul>
+<li>Absolute level (how low)</li>
+<li>Direction (recent vs prior 3mo)</li>
+</ul>
+</div>
+</div>
+<div class="term-note">*<b>OLS</b> = Ordinary Least Squares, a standard statistical method for fitting a trend line through recent data points to test whether a real direction exists.</div>
+<div class="term-note">**<b>EWMA</b> = Exponentially Weighted Moving Average, a way of comparing an account's most recent activity against its own historical baseline, weighting recent data more heavily.</div>
+
+<div class="fam-row" style="grid-template-columns:repeat(2,1fr);margin-top:4px">
+<div class="fam-card" style="background:#f0eee8">
+<div class="fam-title" style="font-size:11px">Pricing friction</div>
+<ul><li>Negative pricing language detected in customer communications</li></ul>
+</div>
+<div class="fam-card" style="background:#f0eee8">
+<div class="fam-title" style="font-size:11px">ARR&dagger; downgrade</div>
+<ul><li>A significant non-renewal drop in recurring revenue, already reflected in the account's own billing history</li></ul>
+</div>
+</div>
+<div class="term-note">&dagger;<b>ARR</b> = Annual Recurring Revenue. These two are smaller, independent modifiers, not part of the four main families above, but they use the same point mechanism. ARR downgrade is a different signal from the SFDC ARR-at-risk override below - a downgrade is a realized, backward-looking billing fact, while ARR-at-risk is a forward-looking judgment a CSM confirms directly in Salesforce, and the two do not always occur on the same accounts. API Watch is not part of this points system at all - it works only through the override described below.</div>
+
+<div class="ledger"><div class="neg"></div><div class="pos"></div></div>
+<div class="ledger-labels"><span>&minus; points</span><span>0</span><span>+ points</span></div>
+<div class="outcome-row">
+<span class="outcome neg">Negative &le; -2</span>
+<span class="outcome stable">Stable -2 to +2</span>
+<span class="outcome pos">Positive &ge; +2</span>
+</div>
+
+<div class="override-strip">
+<span class="ov-box">Momentum = Trajectory, unless overridden</span>
+<span class="ov-arrow">&#8594;</span>
+<span class="ov-note">The pills above are Trajectory - the raw point total from this page alone. Momentum, the value actually shown on the account card, equals Trajectory by default but is forced to Negative outright, bypassing every point above, whenever either (a) a competitor is detected via any of five equal-authority sources, or (b) a confirmed ARR-at-risk entry exists in Salesforce. Both also force the account straight to Needs Attention regardless of Health. See Section 3 for exactly how each of the two overrides works.</span>
+</div>
+</div>
+
+<!-- SECTION 3: SEGMENTATION -->
+<div class="section">
+<h2>3. Segmentation - Health &times; Momentum</h2>
+<div class="lead">The matrix below is the only base router, and it only applies to accounts not already caught by two independent hard overrides that sit outside it: a confirmed ARR-at-risk entry in Salesforce, or a detected competitor from any of five equal-authority sources. Either override alone forces Needs Attention outright, regardless of Health or Momentum - there is no tier that only blocks Expand.</div>
+
+<div class="matrix-wrap">
+<div></div>
+<div class="axis-label">Stable / Positive momentum</div>
+<div class="axis-label">Negative momentum</div>
+
+<div class="row-label">Green health<span>(EWS &ge; 50)</span></div>
+<div class="cell expand"><div class="g-name">EXPAND</div><div class="g-desc">Strong health, no risk signals</div></div>
+<div class="cell protect"><div class="g-name">PROTECT</div><div class="g-desc">Strong health, early warning</div></div>
+
+<div class="row-label">Yellow / Red health<span>(EWS &lt; 50)</span></div>
+<div class="cell nurture"><div class="g-name">NURTURE</div><div class="g-desc">Below target, holding steady</div></div>
+<div class="cell attention"><div class="g-name">NEEDS ATTENTION</div><div class="g-desc">Declining and/or at risk</div></div>
+</div>
+
+<div class="overlay-card hard" style="margin-bottom:14px">
+<div class="oc-title">Competitor signals - five equal-authority sources, one flag, one consequence</div>
+<ol style="margin-bottom:10px">
+<li><b>Migration Risk Signal</b> (Product Intelligence) - a quantitative pipeline tracking migration-stage indicators, like schedule mirroring or incident-history copying. Fires at any migration stage, including the earliest ("low signal") stage; every stage carries identical routing weight.</li>
+<li><b>API Watch, point solution</b> (Data Science) - detects a competing tool active directly in this specific account.</li>
+<li><b>API Watch, account-wide</b> (Data Science and/or Product Intelligence) - detects a qualifying signal anywhere in this account's PagerDuty customer family: this account's own row, or a related account sharing the same customer record. Rolls up both the point-solution signal above and the Migration Risk Signal above across the family, so it can fire from either model, or both - an account can show this signal with none of its own if a related account under the same customer record has one. Works only through this override; it does not subtract points from Trajectory (Section 2).</li>
+<li><b>CSM Notes</b> (Customer Success) - a qualitative signal from CSM-logged activity: a named competitor at sufficient confidence and a non-coexist direction. Fires on its own, with no requirement that another source also fire.</li>
+<li><b>Gong Calls</b> - a replacement-risk score of 4 or 5 on any call inside the account's live 90-day window. Also fires on its own.</li>
+</ol>
+<div style="background:#fff;border:1px solid #E24B4A55;border-radius:6px;padding:8px 10px">
+<div style="font-size:11px;font-weight:700;color:#791F1F;margin-bottom:3px">Always Needs Attention, no matter what Health or Momentum say:</div>
+<div style="font-size:10.5px;color:#791F1F">Any one of the five sources above firing, on its own, forces Needs Attention and forces Momentum to Negative. There is no tier and no "blocks Expand only" middle ground - every source carries identical authority, and when more than one fires for the same account, all of them are listed together, not just the first one detected.</div>
+</div>
+</div>
+
+<div class="overlay-card hard" style="margin-bottom:14px">
+<div class="oc-title">SFDC&dagger; ARR risk file</div>
+<ol>
+<li><b>A hard override, not just an Expand block:</b> a confirmed dollar entry forces Needs Attention outright and forces Momentum to Negative, regardless of Health or Trajectory. There is no exemption for Green-health accounts, the same as the competitor-signal override above.</li>
+<li><b>Shown on any account, in any group</b> - not just Needs Attention.</li>
+<li>Independent of competitor signals. Either override alone is sufficient to force Needs Attention; when both fire on the same account, both reasons are shown together on the account card.</li>
+</ol>
+</div>
+<div class="term-note" style="margin-bottom:14px">&dagger;<b>SFDC</b> = Salesforce, PagerDuty's CRM system.</div>
+
+<div class="flag-note">
+<b>All five sources carry equal authority</b> - none is a tiebreaker or a mere corroborator for another, and CSM Notes and Gong Calls are not limited to only adding evidence to a quantitative source. A customer explicitly confirming they're running the competing tool alongside PagerDuty rather than replacing it (a COEXIST classification, per the CSM Notes direction rules), for example, suppresses that specific note from firing at all, the same confidence bar applies regardless of which way the evidence points. A single unconfirmed note is never enough to move the needle.
+</div>
+
+<div class="context-box">
+<div class="cb-title">Adoption &middot; Engagement &middot; Outcomes breakdowns</div>
+<div class="cb-body">Shown on every account card to explain why the score looks this way.</div>
+<div class="cb-strong">Context only - not scored, not inputs, not part of segmentation.</div>
+</div>
+
+<div class="legend">Green = healthy / positive &nbsp;&middot;&nbsp; Amber = caution &nbsp;&middot;&nbsp; Purple = below target &nbsp;&middot;&nbsp; Red = risk / override</div>
+</div>
+
+</div>
+</body>
+</html>
